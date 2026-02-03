@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\animales;
+use App\Models\animals;
 use Illuminate\Http\Request;
 
-class AnimalesController extends Controller
+class AnimalsController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -34,7 +34,7 @@ class AnimalesController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(animales $animales)
+    public function show(animals $animals)
     {
         //
     }
@@ -42,7 +42,7 @@ class AnimalesController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(animales $animales)
+    public function edit(animals $animals)
     {
         //
     }
@@ -50,7 +50,7 @@ class AnimalesController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, animales $animales)
+    public function update(Request $request, animals $animals)
     {
         //
     }
@@ -58,7 +58,7 @@ class AnimalesController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(animales $animales)
+    public function destroy(animals $animals)
     {
         //
     }
