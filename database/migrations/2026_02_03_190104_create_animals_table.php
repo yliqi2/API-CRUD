@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('animals', function (Blueprint $table) {
             $table->id('animal_id');
             $table->string('name')->nullable(false);                                    // OBLIGATORIO
-            $table->enum('species', ['dog', 'cat', 'hamster', 'conejo'])->nullable(false); // OBLIGATORIO (desplegable)
+            $table->enum('species', ['dog', 'cat', 'hamster', 'bunny'])->nullable(false); // OBLIGATORIO (desplegable)
             $table->float('weight');
             $table->text('disease');
             $table->longText('comments');

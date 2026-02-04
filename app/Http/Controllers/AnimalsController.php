@@ -7,59 +7,126 @@ use Illuminate\Http\Request;
 
 class AnimalsController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
+    /*
+        200: OK → la petición salió bien.
+        201: Created → se creó un recurso.
+        404: Not Found → no existe el recurso.
+        422: Unprocessable Entity → error de validación.
+        500: Server Error → error interno del servidor.
+    */
+
+    //muestra todos los animales get
     public function index()
     {
-        //
+        return animals::all();
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     */
+    //funcion que es llamada al hacer post
     public function store(Request $request)
     {
-        //
+        try {
+            $validated = $request->validate([
+                'name' => 'required|string|min:1',
+                'species' => 'required|in:dog,cat,hamster,bunny',
+                'weight' => 'nullable|numeric|min:0',
+                'disease' => 'nullable|string',
+                'comments' => 'nullable|string',
+            ], [
+                'name.required' => 'The name field is required',
+                'species.required' => 'The species field is required',
+                'species.in' => 'The species must be: dog, cat, hamster, or bunny',
+                'weight.numeric' => 'The weight must be a number',
+                'weight.min' => 'The weight cannot be negative',
+            ]);
+
+            $animal = animals::create($validated);
+            
+            return response()->json([
+                'message' => 'Animal created successfully',
+                'data' => $animal
+            ], 201);
+        } catch (\Illuminate\Validation\ValidationException $e) {
+            return response()->json([
+                'message' => 'Validation error',
+                'errors' => $e->errors()
+            ], 422);
+        } catch (\Exception $e) {
+            return response()->json([
+                'message' => 'Error creating animal',
+                'error' => $e->getMessage()
+            ], 500);
+        }
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(animals $animals)
+    //funcion que es llamada al hacer get con un id
+    public function show($id)
     {
-        //
+        $animal = animals::find($id);
+
+        if (!$animal) {
+            return response()->json([
+                'error' => 'Animal not found'
+            ], 404);
+        }
+
+        return $animal;
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(animals $animals)
+    //funcion que es llamada al hacer put con un id
+    public function update(Request $request, $id)
     {
-        //
+        try {
+            $animal = animals::find($id);
+
+            if (!$animal) {
+                return response()->json([
+                    'message' => 'Animal not found'
+                ], 404);
+            }
+
+            $validated = $request->validate([
+                'name' => 'sometimes|string|min:1',
+                'species' => 'sometimes|in:dog,cat,hamster,bunny',
+                'weight' => 'nullable|numeric|min:0',
+                'disease' => 'nullable|string',
+                'comments' => 'nullable|string',
+            ], [
+                'species.in' => 'The species must be: dog, cat, hamster, or bunny',
+                'weight.numeric' => 'The weight must be a number',
+                'weight.min' => 'The weight cannot be negative',
+            ]);
+
+            $animal->update($validated);
+            
+            return response()->json([
+                'message' => 'Animal updated successfully',
+                'data' => $animal
+            ], 200);
+        } catch (\Illuminate\Validation\ValidationException $e) {
+            return response()->json([
+                'message' => 'Validation error',
+                'errors' => $e->errors()
+            ], 422);
+        } catch (\Exception $e) {
+            return response()->json([
+                'message' => 'Error updating animal',
+                'error' => $e->getMessage()
+            ], 500);
+        }
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, animals $animals)
+    //funcion que es llamada al hacer delete con un id
+    public function destroy($id)
     {
-        //
-    }
+        $animal = animals::find($id);
 
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(animals $animals)
-    {
-        //
+        if (!$animal) {
+            return response()->json([
+                'error' => 'Animal not found'
+            ], 404);
+        }
+
+        $animal->delete();
+        return response()->json(['message' => 'Animal deleted successfully'], 200);
     }
 }
