@@ -31,12 +31,14 @@ class AnimalsController extends Controller
                 'weight' => 'nullable|numeric|min:0',
                 'disease' => 'nullable|string',
                 'comments' => 'nullable|string',
+                'person_id' => 'nullable|exists:person,person_id',
             ], [
                 'name.required' => 'The name field is required',
                 'species.required' => 'The species field is required',
                 'species.in' => 'The species must be: dog, cat, hamster, or bunny',
                 'weight.numeric' => 'The weight must be a number',
                 'weight.min' => 'The weight cannot be negative',
+                'person_id.exists' => 'The specified person_id does not exist',
             ]);
 
             $animal = animals::create($validated);
@@ -90,10 +92,12 @@ class AnimalsController extends Controller
                 'weight' => 'nullable|numeric|min:0',
                 'disease' => 'nullable|string',
                 'comments' => 'nullable|string',
+                'person_id' => 'nullable|exists:person,person_id',
             ], [
                 'species.in' => 'The species must be: dog, cat, hamster, or bunny',
                 'weight.numeric' => 'The weight must be a number',
                 'weight.min' => 'The weight cannot be negative',
+                'person_id.exists' => 'The specified person_id does not exist',
             ]);
 
             $animal->update($validated);

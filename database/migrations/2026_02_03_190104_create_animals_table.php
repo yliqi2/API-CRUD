@@ -13,11 +13,12 @@ return new class extends Migration
     {
         Schema::create('animals', function (Blueprint $table) {
             $table->id('animal_id');
-            $table->string('name')->nullable(false);                                    // OBLIGATORIO
-            $table->enum('species', ['dog', 'cat', 'hamster', 'bunny'])->nullable(false); // OBLIGATORIO (desplegable)
+            $table->string('name')->nullable(false);                                    
+            $table->enum('species', ['dog', 'cat', 'hamster', 'bunny'])->nullable(false); 
             $table->float('weight');
             $table->text('disease');
             $table->longText('comments');
+            $table->foreignId('person_id')->nullable()->constrained('person', 'person_id')->onDelete('cascade');
             $table->timestamps();
         });
     }

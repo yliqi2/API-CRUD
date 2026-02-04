@@ -12,7 +12,7 @@ class animals extends Model
     public $incrementing = true;
     
     //campos que se pueden rellenar
-    protected $fillable = ['name', 'species', 'weight', 'disease', 'comments'];
+    protected $fillable = ['name', 'species', 'weight', 'disease', 'comments', 'person_id'];
 
     protected $hidden = [];
 
