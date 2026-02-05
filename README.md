@@ -39,6 +39,26 @@ API REST sencilla en Laravel para gestionar **Personas** y sus **Animales** de m
 - **Rutas API:** [routes/api.php](routes/api.php)
 - **Controladores:** [app/Http/Controllers/](app/Http/Controllers/)
 
+## Rutas API (route:list)
+
+Resumen de rutas registradas (php artisan route:list):
+
+| Método | URI | Acción |
+| --- | --- | --- |
+| GET\|HEAD | api/animals | animals.index > AnimalsController@index |
+| POST | api/animals | animals.store > AnimalsController@store |
+| GET\|HEAD | api/animals/{animal} | animals.show > AnimalsController@show |
+| PUT\|PATCH | api/animals/{animal} | animals.update > AnimalsController@update |
+| DELETE | api/animals/{animal} | animals.destroy > AnimalsController@destroy |
+| GET\|HEAD | api/person | person.index > PersonController@index |
+| POST | api/person | person.store > PersonController@store |
+| GET\|HEAD | api/person/{person} | person.show > PersonController@show |
+| PUT\|PATCH | api/person/{person} | person.update > PersonController@update |
+| DELETE | api/person/{person} | person.destroy > PersonController@destroy |
+| GET\|HEAD | api/user | Closure (auth:sanctum) |
+
+![Rutas API](screenshots/rutas.png)
+
 ## Endpoints de Personas
 
 ### GET - Obtener todas las personas
