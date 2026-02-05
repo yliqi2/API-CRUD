@@ -31,10 +31,8 @@ class AnimalsController extends Controller
                 'weight' => 'nullable|numeric|min:0',
                 'disease' => 'nullable|string',
                 'comments' => 'nullable|string',
-                'person_id' => 'nullable|exists:person,person_id',
+                'person_id' => 'required|exists:person,id',
             ], [
-                'name.required' => 'The name field is required',
-                'species.required' => 'The species field is required',
                 'species.in' => 'The species must be: dog, cat, hamster, or bunny',
                 'weight.numeric' => 'The weight must be a number',
                 'weight.min' => 'The weight cannot be negative',
